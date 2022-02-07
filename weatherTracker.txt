@@ -1,0 +1,38 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 import requests\
+import json\
+\
+url = 'http://api.openweathermap.org/data/2.5/weather?lat=\{0\}&lon=\{1\}&appid=\{2\}&units=\{3\}'\
+apiKey = '58c9d832ec69e6fd8f85409e16cd356d'\
+units = 'imperial'\
+snoqualmieLat, snoqualmieLon = 47.410694, -121.410227\
+crystalLat, crystalLon = 46.935568, -121.474292\
+\
+# Build the api request urls\
+snoqualmieBuiltUrl = url.format(snoqualmieLat, snoqualmieLon, apiKey, units)\
+crystalBuiltUrl = url.format(crystalLat, crystalLon, apiKey, units)\
+\
+# Make the request to weather service\
+snoqualmieRequest = requests.get(snoqualmieBuiltUrl)\
+crystalRequest = requests.get(crystalBuiltUrl)\
+\
+# Convert the response to JSON for parsing\
+snoqualmieJson = json.loads(snoqualmieRequest.text)\
+crystalJson = json.loads(crystalRequest.text)\
+\
+# Extract necessary fields for display on matrix\
+snoqualmieTemp, snoqualmieFeelsLike = snoqualmieJson['main']['temp'], snoqualmieJson['main']['feels_like']\
+crystalTemp, crystalFeelsLike = crystalJson['main']['temp'], crystalJson['main']['feels_like']\
+\
+\
+print(snoqualmieTemp, snoqualmieFeelsLike)\
+print(crystalTemp, crystalFeelsLike)\
+print('--------------------------------')\
+print('Snoqualmie result:', snoqualmieJson, '\\n')\
+print('Crystal result:', crystalJson)}
